@@ -56,6 +56,3 @@ Esta API serve para baixar e converter arquivos CSV disponibilizados pela Embrap
     ```bash
     python run.py
     ```
-
-## Licença
-Este projeto está licenciado sob a MIT License - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
