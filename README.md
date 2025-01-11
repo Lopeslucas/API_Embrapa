@@ -58,18 +58,21 @@ Clone o repositório do projeto para sua máquina local:
 ```bash
 git clone <URL>
 cd api_embrapa
+```
 
 ### Passo 2: Instalar Dependências
 Instale as dependências do projeto utilizando o pip:
 
 ```bash
 pip install -r requirements.txt
+```
 
 ### Passo 3: Executar a Aplicação
 Execute o arquivo principal do projeto:
 
 ```bash
 python run.py
+```
 
 Após rodar o projeto, a API estará disponível localmente e você poderá acessar os endpoints definidos.
 
