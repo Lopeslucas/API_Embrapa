@@ -1,5 +1,5 @@
 from flask import jsonify
-from app.services.services import get_data_for_category
+from app.services import get_data_for_category
 
 def init_routes(app):
     @app.route('/api/producao', methods=['GET'])
