@@ -91,10 +91,6 @@ Este projeto foi desenvolvido com foco em escalabilidade e facilidade de deploy.
 - O deploy da API será feito utilizando plataformas como AWS, Heroku ou similar (a ser definido durante o desenvolvimento).
 - A API estará configurada para ser escalável e atender a um grande volume de requisições, caso necessário.
 
-### Autenticação (Opcional)
-
-A implementação de autenticação, como JWT (JSON Web Tokens), é recomendada, mas não obrigatória, para garantir que apenas usuários autorizados possam acessar os dados sensíveis ou realizar requisições específicas.
-
 ### Contribuições
 
 Contribuições são bem-vindas! Se você deseja colaborar no desenvolvimento deste projeto, siga as etapas abaixo:
