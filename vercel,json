@@ -8,23 +8,23 @@
   ],
   "routes": [
     {
-      "src": "/api/producao",
+      "src": "/producao",
       "dest": "/api/producao.py"
     },
     {
-      "src": "/api/processamento",
+      "src": "/processamento",
       "dest": "/api/processamento.py"
     },
     {
-      "src": "/api/comercializacao",
+      "src": "/comercializacao",
       "dest": "/api/comercializacao.py"
     },
     {
-      "src": "/api/importacao",
+      "src": "/importacao",
       "dest": "/api/importacao.py"
     },
     {
-      "src": "/api/exportacao",
+      "src": "/exportacao",
       "dest": "/api/exportacao.py"
     }
   ]
