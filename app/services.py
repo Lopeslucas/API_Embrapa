@@ -2,13 +2,7 @@ import os
 import requests
 import pandas as pd
 import json
-
-# Diretório de downloads
-download_dir = os.path.join(os.getcwd(), 'downloads')
-
-# Garantir que o diretório de downloads exista
-if not os.path.exists(download_dir):
-    os.makedirs(download_dir)
+import tempfile
 
 # URLs para cada categoria
 urls = {
@@ -24,24 +18,21 @@ def download_file(url):
     try:
         response = requests.get(url)
         response.raise_for_status()  # Levanta um erro se a resposta não for 200
-        filename = os.path.join(download_dir, url.split("/")[-1])
-        with open(filename, 'wb') as f:
-            f.write(response.content)
-        return filename
+        return response.content
     except Exception as e:
         print(f'Erro ao baixar o arquivo de {url}: {e}')
         return None
 
 # Função para converter o arquivo CSV em JSON
-def convert_csv_to_json(csv_file_path):
+def convert_csv_to_json(csv_data):
     try:
-        # Lê o arquivo CSV usando o pandas
-        df = pd.read_csv(csv_file_path, delimiter=';', on_bad_lines='skip')
-        json_file_path = csv_file_path.replace('.csv', '.json')
+        # Converte o CSV em um dataframe pandas diretamente da memória
+        from io import StringIO
+        df = pd.read_csv(StringIO(csv_data.decode('utf-8')), delimiter=';', on_bad_lines='skip')
         
-        # Salva o arquivo JSON
-        df.to_json(json_file_path, orient='records', lines=True)
-        return json_file_path
+        # Converte o DataFrame para JSON
+        json_data = df.to_json(orient='records', lines=True)
+        return json_data
     except Exception as e:
         print(f'Erro ao converter o CSV para JSON: {e}')
         return None
@@ -55,15 +46,13 @@ def get_data_for_category(category):
         }
 
     url = urls[category]
-    csv_file = download_file(url)
-    if csv_file:
-        json_file = convert_csv_to_json(csv_file)
-        if json_file:
-            with open(json_file, 'r') as f:
-                data = f.read()
+    csv_data = download_file(url)
+    if csv_data:
+        json_data = convert_csv_to_json(csv_data)
+        if json_data:
             return {
                 "statusCode": 200,
-                "body": json.dumps({"data": data})
+                "body": json.dumps({"data": json_data})
             }
     
     return {
