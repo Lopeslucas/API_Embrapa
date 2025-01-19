@@ -2,30 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/**/*.py",
+      "src": "run.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
-    {
-      "src": "/producao",
-      "dest": "/api/producao.py"
-    },
-    {
-      "src": "/processamento",
-      "dest": "/api/processamento.py"
-    },
-    {
-      "src": "/comercializacao",
-      "dest": "/api/comercializacao.py"
-    },
-    {
-      "src": "/importacao",
-      "dest": "/api/importacao.py"
-    },
-    {
-      "src": "/exportacao",
-      "dest": "/api/exportacao.py"
-    }
+    { "src": "/(.*)", "dest": "run.py" }
   ]
 }
