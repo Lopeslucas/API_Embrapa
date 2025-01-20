@@ -2,6 +2,7 @@ import os
 import requests
 import pandas as pd
 import json
+from flask import jsonify
 
 # Diretório de downloads
 download_dir = os.path.join(os.getcwd(), 'downloads')
@@ -48,25 +49,15 @@ def convert_csv_to_json(csv_file_path):
 
 # Função para obter os dados para uma categoria específica
 def get_data_for_category(category):
-    if category not in urls:
-        return {
-            "statusCode": 404,
-            "body": json.dumps({"error": "Categoria não encontrada"})
-        }
+    try:
+        # Substitua isso com a lógica real de como você obtém os dados
+        # Exemplo: dados = buscar_dados_da_categoria(category)
+        dados = {"category": category, "data": "dados fictícios"}  # Simulação de dados
 
-    url = urls[category]
-    csv_file = download_file(url)
-    if csv_file:
-        json_file = convert_csv_to_json(csv_file)
-        if json_file:
-            with open(json_file, 'r') as f:
-                data = f.read()
-            return {
-                "statusCode": 200,
-                "body": json.dumps({"data": data})
-            }
-    
-    return {
-        "statusCode": 500,
-        "body": json.dumps({"error": "Erro ao processar o arquivo"})
-    }
+        if dados:
+            return jsonify(dados), 200  # Retorna os dados com status 200 OK
+        else:
+            return jsonify({"message": "Categoria não encontrada"}), 404  # Categoria não encontrada
+
+    except Exception as e:
+        return jsonify({"message": f"Erro ao processar arquivo: {str(e)}"}), 500  # Erro interno do servidor

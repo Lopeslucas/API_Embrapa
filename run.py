@@ -1,11 +1,14 @@
+import os
 from app import create_app
+from waitress import serve  # Importa o Waitress para rodar em produção no Windows
 
 app = create_app()
 
-# Adiciona log de depuração para verificar se a criação da aplicação ocorre corretamente
+# Log para depuração
 print("Aplicação Flask inicializada com sucesso!")
 
 if __name__ == "__main__":
-    # Isso vai garantir que a aplicação seja executada corretamente
-    print("Executando Flask no modo local...")
-    app.run(debug=True)
+    # Usa o Waitress em vez do app.run() do Flask
+    print("Executando Flask no modo local (Windows)...")
+    port = int(os.environ.get("PORT", 5000))  # Vercel define a porta via variável de ambiente
+    serve(app, host="0.0.0.0", port=port)  # Usa o 0.0.0.0 para garantir que o app seja acessível de qualquer lugar
