@@ -80,7 +80,7 @@ Após rodar o projeto, a API estará disponível localmente e você poderá aces
 
 ## Arquitetura e Plano de Deploy
 
-![Arquitetura da API](https://imgur.com/a/zWXSYjl)
+![Arquitetura da API](api-embrapa.png)
 
 Este projeto foi desenvolvido com foco em escalabilidade e facilidade de deploy. A arquitetura foi desenhada para garantir que a ingestão dos dados seja eficiente, e a API será capaz de fornecer informações estruturadas para alimentar modelos de Machine Learning em uma etapa futura.
 
