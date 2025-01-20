@@ -7,7 +7,9 @@ Esta API foi criada como parte do projeto da Pos_tech - Tech Challenge - Fase 1.
 O projeto tem como foco o desenvolvimento de uma API pública que:
 - Realiza consultas nos dados do site da Embrapa.
 - Exponibiliza essas informações de maneira estruturada através de endpoints RESTful.
+- Disponibiliza os dados em formato JSON, com suporte a download diretamente pelo navegador.
 - Alimenta uma base de dados que será utilizada futuramente para treinamento de modelos de Machine Learning.
+- Está preparada para ser escalável, com um plano de deploy que integra a ingestão dos dados até a alimentação de modelos de ML.
 
 Além disso, a API está preparada para ser escalável, com um plano de deploy que integra a ingestão dos dados até a alimentação de modelos de ML.
 
@@ -29,10 +31,10 @@ A API possui os seguintes endpoints, que permitem consultar dados específicos d
   - `404 Not Found`: Categoria não encontrada.
   - `500 Internal Server Error`: Erro ao processar o arquivo.
 
-### `/api/comercializacao`
-- **Descrição**: Retorna os dados de comercialização em formato JSON.
+### `/api/comercio`
+- **Descrição**: Retorna os dados de comercio em formato JSON.
 - **Respostas**:
-  - `200 OK`: Dados de Comercialização.
+  - `200 OK`: Dados de Comercio.
   - `404 Not Found`: Categoria não encontrada.
   - `500 Internal Server Error`: Erro ao processar o arquivo.
 
@@ -83,13 +85,22 @@ Este projeto foi desenvolvido com foco em escalabilidade e facilidade de deploy.
 ### Fluxo do Projeto
 
 - **Ingestão de Dados**: A API consulta os dados no site da Embrapa e os disponibiliza nos endpoints em formato JSON.
-- **Armazenamento**: Os dados podem ser armazenados em um banco de dados relacional ou não-relacional (a ser definido conforme as necessidades).
+- **Disponibilidade Dinâmica**: Os dados são convertidos e disponibilizados dinamicamente, com a capacidade de forçar o download do arquivo JSON.
 - **Treinamento de Modelos de ML**: Futuramente, esses dados serão utilizados para alimentar modelos de Machine Learning, com o objetivo de realizar previsões ou análises avançadas.
 
 ### Deploy
 
-- O deploy da API será feito utilizando plataformas como AWS, Heroku ou similar (a ser definido durante o desenvolvimento).
-- A API estará configurada para ser escalável e atender a um grande volume de requisições, caso necessário.
+A API foi implantada na plataforma Render, que fornece deploy fácil e escalável para aplicações. Após o deploy, a API está disponível publicamente.
+
+**Link para a API em Produção**:
+- A API está disponível em: https://api-embrapa-fk6s.onrender.com
+
+**Documentação Interativa da API**:
+- A documentação interativa da API está acessível em: https://api-embrapa-fk6s.onrender.com/apidocs/#/
+
+### Escalabilidade
+
+O projeto foi desenvolvido para ser escalável, garantindo que a API consiga atender a um grande volume de requisições, especialmente com a ingestão de dados e a utilização futura para treinamento de modelos de Machine Learning.
 
 ### Contribuições
 
