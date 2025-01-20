@@ -6,7 +6,7 @@ Esta API foi criada como parte do projeto da Pos_tech - Tech Challenge - Fase 1.
 
 O projeto tem como foco o desenvolvimento de uma API pública que:
 - Realiza consultas nos dados do site da Embrapa.
-- Exponibiliza essas informações de maneira estruturada através de endpoints RESTful.
+- Informações estruturada através de endpoints.
 - Disponibiliza os dados em formato JSON, com suporte a download diretamente pelo navegador.
 - Alimenta uma base de dados que será utilizada futuramente para treinamento de modelos de Machine Learning.
 - Está preparada para ser escalável, com um plano de deploy que integra a ingestão dos dados até a alimentação de modelos de ML.
