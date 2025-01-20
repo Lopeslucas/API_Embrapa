@@ -14,6 +14,7 @@ def init_routes(app):
             500:
                 description: Erro ao processar arquivo
         """
+        print("Rota /api/producao registrada!")  # Debug
         return get_data_for_category('producao')
 
     @app.route('/api/processamento', methods=['GET'])
@@ -28,6 +29,7 @@ def init_routes(app):
             500:
                 description: Erro ao processar arquivo
         """
+        print("Rota /api/processamento registrada!")  # Debug
         return get_data_for_category('processamento')
 
     @app.route('/api/comercializacao', methods=['GET'])
@@ -42,6 +44,7 @@ def init_routes(app):
             500:
                 description: Erro ao processar arquivo
         """
+        print("Rota /api/comercializacao registrada!")  # Debug
         return get_data_for_category('comercializacao')
 
     @app.route('/api/importacao', methods=['GET'])
@@ -56,6 +59,7 @@ def init_routes(app):
             500:
                 description: Erro ao processar arquivo
         """
+        print("Rota /api/importacao registrada!")  # Debug
         return get_data_for_category('importacao')
 
     @app.route('/api/exportacao', methods=['GET'])
@@ -70,4 +74,5 @@ def init_routes(app):
             500:
                 description: Erro ao processar arquivo
         """
+        print("Rota /api/exportacao registrada!")  # Debug
         return get_data_for_category('exportacao')
