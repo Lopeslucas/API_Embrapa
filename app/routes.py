@@ -3,6 +3,7 @@ import requests
 import pandas as pd                                  # Adicionado pandas
 import joblib                                        # Para carregar o modelo
 import io
+import os                                            # Para manipulação de caminhos
 from flask import jsonify, Response, request 
 
 from app.services import get_json_for_category
@@ -13,7 +14,8 @@ from app.services import urls                        # Importa o dicionário de 
 
 
 # Carregar o modelo de Machine Learning
-model = joblib.load('app\\models\\random_forest_classifier.pkl') 
+model_path = os.path.join(os.path.dirname(__file__), 'models', 'random_forest_classifier.pkl')
+model = joblib.load(model_path)
 
 
 def init_routes(app):
