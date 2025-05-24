@@ -13,7 +13,7 @@ from app.services import urls                        # Importa o dicionário de 
 
 
 # Carregar o modelo de Machine Learning
-model = joblib.load('C:\\Users\\lucas\\OneDrive\\Desktop\\Estudos Python\\POS\\API_Embrapa\\app\\models\\random_forest_classifier.pkl')  # Substitua pelo caminho correto do modelo
+model = joblib.load('app\\models\\random_forest_classifier.pkl') 
 
 
 def init_routes(app):
