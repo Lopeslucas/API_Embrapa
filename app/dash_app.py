@@ -5,12 +5,14 @@ import joblib  # Para carregar o modelo de predição
 
 def init_dashboard(server):
     """Inicializa o Dash e o integra com o servidor Flask."""
-    # Leia o CSV
-    df = pd.read_csv('C:\\Users\\lucas\\OneDrive\\Desktop\\Estudos Python\\POS\\API_Embrapa\\data\\processed\\importacao_dados_transformados.csv', delimiter=',')
+    # Caminho relativo para o CSV
+    csv_path = os.path.join(os.path.dirname(__file__), 'data', 'processed', 'importacao_dados_transformados.csv')
+    df = pd.read_csv(csv_path, delimiter=',')
 
-    # Carregue o modelo de predição
-    model = joblib.load('C:\\Users\\lucas\\OneDrive\\Desktop\\Estudos Python\\POS\\API_Embrapa\\app\\models\\random_forest_classifier.pkl')
-
+    # Caminho relativo para o modelo
+    model_path = os.path.join(os.path.dirname(__file__), 'models', 'random_forest_classifier.pkl')
+    model = joblib.load(model_path)
+    
     # Prepare os dados para o gráfico de linha
     top_10_paises = df.groupby("País")["Valor (US$)"].sum().sort_values(ascending=False).head(10).index
     dados_top_10_decadas = df[df["País"].isin(top_10_paises)]
