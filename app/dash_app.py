@@ -2,6 +2,7 @@ from dash import Dash, dcc, html, Input, Output, State
 import pandas as pd
 import plotly.express as px
 import joblib  # Para carregar o modelo de predição
+import os
 
 def init_dashboard(server):
     """Inicializa o Dash e o integra com o servidor Flask."""

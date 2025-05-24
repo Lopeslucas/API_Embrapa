@@ -183,7 +183,13 @@ def train_and_save_model(data_path, model_path):
 
 # Exemplo de uso
 if __name__ == "__main__":
+    # Caminho relativo para o arquivo de dados
+    data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'processed', 'importacao_dados_transformados.csv')
+    
+    # Caminho relativo para salvar o modelo
+    model_path = os.path.join(os.path.dirname(__file__), 'random_forest_classifier.pkl')
+    
     train_and_save_model(
-        data_path="c:\\Users\\lucas\\OneDrive\\Desktop\\Estudos Python\\POS\\API_Embrapa\\data\\processed\\importacao_dados_transformados.csv",
-        model_path="c:\\Users\\lucas\\OneDrive\\Desktop\\Estudos Python\\POS\\API_Embrapa\\App\\models\\random_forest_classifier.pkl"
+        data_path=data_path,
+        model_path=model_path
     )
