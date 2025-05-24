@@ -7,6 +7,7 @@ import joblib  # Para salvar o modelo
 
 import pandas as pd
 import numpy as np
+import os
 
 
 def preprocess_data(df):
@@ -183,13 +184,17 @@ def train_and_save_model(data_path, model_path):
 
 # Exemplo de uso
 if __name__ == "__main__":
-    # Caminho relativo para o arquivo de dados
-    data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'processed', 'importacao_dados_transformados.csv')
+    # Caminho absoluto para o arquivo de dados
+    data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'data\\processed\\importacao_dados_transformados.csv'))
+    print(f"Caminho do arquivo de dados: {data_path}")
     
-    # Caminho relativo para salvar o modelo
-    model_path = os.path.join(os.path.dirname(__file__), 'random_forest_classifier.pkl')
+    # Caminho absoluto para salvar o modelo
+    model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'random_forest_classifier.pkl'))
+    print(f"Caminho do modelo: {model_path}")
     
     train_and_save_model(
         data_path=data_path,
         model_path=model_path
     )
+    
+    
