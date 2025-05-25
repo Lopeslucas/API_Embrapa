@@ -9,6 +9,9 @@ import pandas as pd
 import numpy as np
 import os
 
+import os
+from joblib import dump  # Substituindo pickle por joblib
+
 
 def preprocess_data(df):
     """Função para realizar o tratamento de dados."""
@@ -151,15 +154,7 @@ def preprocess_data(df):
 
 
 
-import os
-import pandas as pd
-from imblearn.over_sampling import SMOTE
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import (accuracy_score, 
-                           classification_report, 
-                           confusion_matrix)
-from joblib import dump  # Substituindo pickle por joblib
+
 
 def train_and_save_model(data_path, model_path):
     # Carregar os dados tratados
