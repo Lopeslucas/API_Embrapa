@@ -1,7 +1,7 @@
 from dash import Dash, dcc, html, Input, Output, State
 import pandas as pd
 import plotly.express as px
-import joblib  # Para carregar o modelo de predição
+import pickle                   # Para carregar o modelo de predição
 import os
 
 def init_dashboard(server):
@@ -12,7 +12,10 @@ def init_dashboard(server):
 
     # Caminho relativo para o modelo
     model_path = os.path.join(os.path.dirname(__file__), 'models', 'random_forest_classifier.pkl')
-    model = joblib.load(model_path)
+
+    # Carregar o modelo usando pickle
+    with open(model_path, 'rb') as model_file:
+        model = pickle.load(model_file)
     
     # Prepare os dados para o gráfico de linha
     top_10_paises = df.groupby("País")["Valor (US$)"].sum().sort_values(ascending=False).head(10).index
