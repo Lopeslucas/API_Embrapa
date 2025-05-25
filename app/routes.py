@@ -99,37 +99,61 @@ def init_routes(app):
        
     @app.route('/api/importacao/save_to_db', methods=['GET'])
     def save_importacao_to_db():
-        """Endpoint para salvar os dados tratados de importação no banco de dados."""
+        """
+        Salva os dados tratados de importação no banco de dados.
+        ---
+        responses:
+          200:
+            description: Dados tratados da categoria 'importacao' salvos no banco de dados com sucesso!
+          500:
+            description: Erro ao processar e salvar os dados
+        """
         try:
-            # Faz o download do arquivo CSV
-            response = requests.get(urls['importacao'], timeout=10)  # Adiciona um timeout para evitar bloqueios
+            response = requests.get(urls['importacao'], timeout=10)
             response.raise_for_status()
-
-            # Converte o CSV em DataFrame usando pandas
             df_final = pd.read_csv(io.StringIO(response.text), delimiter=';', on_bad_lines='skip')
-
-            # Aplica o pré-processamento nos dados
             df_tratado = preprocess_data(df_final)
-
-            # Salva os dados tratados no banco de dados
             save_data(df_tratado, 'importacao')
-
             return jsonify({"message": "Dados tratados da categoria 'importacao' salvos no banco de dados com sucesso!"})
         except Exception as e:
             return jsonify({'message': f"Erro ao processar e salvar os dados: {str(e)}"}), 500
 
     @app.route('/api/predict', methods=['POST'])
     def predict():
+        """
+        Realiza predição com o modelo treinado.
+        ---
+        parameters:
+          - in: body
+            name: features
+            schema:
+              type: object
+              properties:
+                features:
+                  type: array
+                  items:
+                    type: object
+            required: true
+        responses:
+          200:
+            description: Predição realizada com sucesso
+            schema:
+              type: object
+              properties:
+                prediction:
+                  type: array
+                  items:
+                    type: number
+          500:
+            description: Erro ao realizar a predição
+        """
         try:
-            data = request.get_json()  # Recebe os dados no formato JSON
-            df_final = pd.DataFrame(data['features'])  # Converte os dados para um DataFrame
-            df_tratado = preprocess_data(df_final)  # Aplica o pré-processamento nos dados
-
-            # Selecionar apenas as colunas usadas no treinamento
-            colunas_treinamento = ["Ano", "Quantidade (Kg)", "Valor (US$)", "Década"]  # Ajuste conforme necessário
+            data = request.get_json()
+            df_final = pd.DataFrame(data['features'])
+            df_tratado = preprocess_data(df_final)
+            colunas_treinamento = ["Ano", "Quantidade (Kg)", "Valor (US$)", "Década"]
             df_tratado = df_tratado[colunas_treinamento]
-
-            prediction = model.predict(df_tratado)  # Realiza a previsão com o modelo
-            return jsonify({'prediction': prediction.tolist()})  # Retorna a previsão
+            prediction = model.predict(df_tratado)
+            return jsonify({'prediction': prediction.tolist()})
         except Exception as e:
-            return jsonify({'error': str(e)}), 500  # Retorna o erro em caso de falha
+            return jsonify({'error': str(e)}), 500

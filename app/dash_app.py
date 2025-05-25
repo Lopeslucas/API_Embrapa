@@ -7,7 +7,7 @@ import os
 def init_dashboard(server):
     """Inicializa o Dash e o integra com o servidor Flask."""
     # Caminho relativo para o CSV
-    csv_path = os.path.join(os.path.dirname(__file__), 'data', 'processed', 'importacao_dados_transformados.csv')
+    csv_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'processed', 'importacao_dados_transformados.csv')
     df = pd.read_csv(csv_path, delimiter=',')
 
     # Caminho relativo para o modelo
