@@ -1,7 +1,7 @@
 import requests
 
 import pandas as pd                                  # Adicionado pandas
-import joblib                                        # Para carregar o modelo
+import pickle                                        # Para carregar o modelo
 import io
 import os                                            # Para manipulação de caminhos
 from flask import jsonify, Response, request 
@@ -13,9 +13,12 @@ from app.services import urls                        # Importa o dicionário de 
 
 
 
-# Carregar o modelo de Machine Learning
+# Caminho para o modelo de Machine Learning
 model_path = os.path.join(os.path.dirname(__file__), 'models', 'random_forest_classifier.pkl')
-model = joblib.load(model_path)
+
+# Carregar o modelo usando pickle
+with open(model_path, 'rb') as model_file:
+    model = pickle.load(model_file)
 
 
 def init_routes(app):

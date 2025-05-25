@@ -3,7 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from imblearn.over_sampling import SMOTE
-import joblib  # Para salvar o modelo
+import pickle
 
 import pandas as pd
 import numpy as np
@@ -178,8 +178,9 @@ def train_and_save_model(data_path, model_path):
     print("Matriz de Confusão:")
     print(confusion_matrix(y_test, y_pred))
 
-    # Salvar o modelo treinado
-    joblib.dump(model, model_path)
+    # Salvar o modelo treinado usando pickle
+    with open(model_path, 'wb') as model_file:
+        pickle.dump(model, model_file)
     print(f"Modelo salvo em: {model_path}")
 
 # Exemplo de uso
