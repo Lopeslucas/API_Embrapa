@@ -151,6 +151,16 @@ def preprocess_data(df):
 
 
 
+import os
+import pandas as pd
+from imblearn.over_sampling import SMOTE
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import (accuracy_score, 
+                           classification_report, 
+                           confusion_matrix)
+from joblib import dump  # Substituindo pickle por joblib
+
 def train_and_save_model(data_path, model_path):
     # Carregar os dados tratados
     df_final = pd.read_csv(data_path)
@@ -164,34 +174,44 @@ def train_and_save_model(data_path, model_path):
     X_resampled, y_resampled = smote.fit_resample(X, y)
 
     # Dividir os dados em treino e teste
-    X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X_resampled, y_resampled, 
+        test_size=0.2, 
+        random_state=42
+    )
 
     # Treinar o modelo
-    model = RandomForestClassifier(n_estimators=200, max_depth=15, class_weight='balanced', random_state=42)
+    model = RandomForestClassifier(
+        n_estimators=200,
+        max_depth=15,
+        class_weight='balanced',
+        random_state=42
+    )
     model.fit(X_train, y_train)
 
     # Avaliar o modelo
     y_pred = model.predict(X_test)
     print("Acurácia:", accuracy_score(y_test, y_pred))
-    print("Relatório de Classificação:")
-    print(classification_report(y_test, y_pred))
-    print("Matriz de Confusão:")
-    print(confusion_matrix(y_test, y_pred))
+    print("Relatório de Classificação:\n", classification_report(y_test, y_pred))
+    print("Matriz de Confusão:\n", confusion_matrix(y_test, y_pred))
 
-    # Salvar o modelo treinado usando pickle
-    with open(model_path, 'wb') as model_file:
-        pickle.dump(model, model_file)
+    # Salvar o modelo treinado usando joblib (mais recomendado que pickle)
+    dump(model, model_path)
     print(f"Modelo salvo em: {model_path}")
 
-# Exemplo de uso
 if __name__ == "__main__":
-    # Caminho absoluto para o arquivo de dados
-    data_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'data\\processed\\importacao_dados_transformados.csv'))
-    print(f"Caminho do arquivo de dados: {data_path}")
+    # Caminhos ajustados para formato multiplataforma
+    data_path = os.path.join(
+        os.path.dirname(__file__), 
+        '..', '..', 
+        'data', 'processed', 
+        'importacao_dados_transformados.csv'
+    )
     
-    # Caminho absoluto para salvar o modelo
-    model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'random_forest_classifier.pkl'))
-    print(f"Caminho do modelo: {model_path}")
+    model_path = os.path.join(
+        os.path.dirname(__file__), 
+        'random_forest_classifier.joblib'  # Mudando a extensão para .joblib
+    )
     
     train_and_save_model(
         data_path=data_path,

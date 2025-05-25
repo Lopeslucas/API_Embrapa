@@ -11,7 +11,7 @@ def init_dashboard(server):
     df = pd.read_csv(csv_path, delimiter=',')
 
     # Caminho relativo para o modelo
-    model_path = os.path.join(os.path.dirname(__file__), 'models', 'random_forest_classifier.pkl')
+    model_path = os.path.join(os.path.dirname(__file__), 'models', 'random_forest_classifier.joblib')
 
     # Carregar o modelo usando pickle
     with open(model_path, 'rb') as model_file:
