@@ -3,9 +3,9 @@ import os
 import pandas as pd
 from flask import jsonify, Response, request
 import requests
+import pickle  # Use pickle para carregar o modelo
 from app.database import save_data  # Importa a função para salvar no banco de dados
 from app.models.train_models import preprocess_data  # Importa a função de pré-processamento
-
 
 # URLs para cada categoria
 urls = {
@@ -47,25 +47,34 @@ def get_json_for_category(category):
         return jsonify({"message": f"Erro ao processar e salvar os dados: {str(e)}"}), 500
     
 def save_importacao_to_db():
-        """Endpoint para salvar os dados tratados de importação no banco de dados."""
-        try:
-            # Faz o download do arquivo CSV
-            response = requests.get(urls['importacao'], timeout=10)  # Adiciona um timeout para evitar bloqueios
-            response.raise_for_status()
+    """Endpoint para salvar os dados tratados de importação no banco de dados."""
+    try:
+        # Faz o download do arquivo CSV
+        response = requests.get(urls['importacao'], timeout=10)  # Adiciona um timeout para evitar bloqueios
+        response.raise_for_status()
 
-            # Converte o CSV em DataFrame usando pandas
-            df_final = pd.read_csv(io.StringIO(response.text), delimiter=';', on_bad_lines='skip')
+        # Converte o CSV em DataFrame usando pandas
+        df_final = pd.read_csv(io.StringIO(response.text), delimiter=';', on_bad_lines='skip')
 
-            # Aplica o pré-processamento nos dados
-            df_tratado = preprocess_data(df_final)
+        # Aplica o pré-processamento nos dados
+        df_tratado = preprocess_data(df_final)
 
-            # Salva os dados tratados no banco de dados
-            save_data(df_tratado, 'importacao')
+        # Salva os dados tratados no banco de dados
+        save_data(df_tratado, 'importacao')
 
-            return jsonify({"message": "Dados tratados da categoria 'importacao' salvos no banco de dados com sucesso!"})
-        except Exception as e:
-            return jsonify({'message': f"Erro ao processar e salvar os dados: {str(e)}"}), 500
-        
+        return jsonify({"message": "Dados tratados da categoria 'importacao' salvos no banco de dados com sucesso!"})
+    except Exception as e:
+        return jsonify({'message': f"Erro ao processar e salvar os dados: {str(e)}"}), 500
+
+
+# Carregue o modelo uma vez ao iniciar o serviço usando pickle
+model_path = os.path.join(
+    os.path.dirname(__file__),
+    'models', 'random_forest_classifier.pkl'
+)
+with open(model_path, 'rb') as model_file:
+    model = pickle.load(model_file)
+
 def predict():
     try:
         data = request.get_json()                   # Recebe os dados no formato JSON

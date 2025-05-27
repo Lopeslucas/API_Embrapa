@@ -1,8 +1,8 @@
 from dash import Dash, dcc, html, Input, Output, State
 import pandas as pd
 import plotly.express as px
-import pickle                   # Para carregar o modelo de predição
 import os
+import pickle  # Use pickle ao invés de joblib
 
 def init_dashboard(server):
     """Inicializa o Dash e o integra com o servidor Flask."""
@@ -11,7 +11,7 @@ def init_dashboard(server):
     df = pd.read_csv(csv_path, delimiter=',')
 
     # Caminho relativo para o modelo
-    model_path = os.path.join(os.path.dirname(__file__), 'models', 'random_forest_classifier.joblib')
+    model_path = os.path.join(os.path.dirname(__file__), 'models', 'random_forest_classifier.pkl')
 
     # Carregar o modelo usando pickle
     with open(model_path, 'rb') as model_file:
